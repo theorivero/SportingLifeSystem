@@ -38,5 +38,3 @@ class equipment:
         self.rental_price = new_rental_price
         return self.rental_price
 
-halter = equipment('halter 8kg', 5, 4, 30)
-print(halter.update_rental_price(70))
