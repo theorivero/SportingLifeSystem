@@ -4,8 +4,11 @@ class client:
     def __init__(self, name, phone_number):
         self.name = name
         self.phone_number = phone_number
-        self.uid = uuid4().int
+        self.id = uuid4().int
         self.rented_equipment = []
+
+    def return_id(self):
+        return self.id
 
     def return_name(self):
         return self.name
@@ -24,5 +27,4 @@ class client:
     def return_rented_equipment(self):
         return self.rented_equipment
 
-pedro = client('pedro', '48999999') 
-print(pedro.return_rented_equipment())
+
