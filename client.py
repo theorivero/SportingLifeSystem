@@ -10,28 +10,28 @@ class Client:
 
     @property
     def return_id(self):
-        return self.id
+        return self.__id
 
     @property
     def name(self):
-        return self.name
+        return self.__name
 
     @name.setter
     def name(self, name):
-        self.name = name
+        self.__name = name
 
     @property
     def phone_number(self):
-        return self.phone_number
+        return self.__phone_number
 
     @phone_number.setter
     def phone_number(self, phone_number):
-        self.phone_number = phone_number
+        self.__phone_number = phone_number
 
     @property
     def rented_equipments(self):
-        return self.rented_equipments
+        return self.__rented_equipments
 
     @rented_equipments.setter
     def rented_equipments(self, equipments):
-        self.rented_equipments.append(equipments)
+        self.__rented_equipments.append(equipments)
