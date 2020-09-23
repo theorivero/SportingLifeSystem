@@ -1,1 +1,50 @@
-print('Hello World')
+from uuid import uuid4
+from client import *
+from equipment import *
+
+
+class Rent:
+    def __init__(self, client : Client, equipment : Equipment, rental_quantity, rental_start, rental_deadline):
+        self.__client = client
+        self.__client.rented_equipments(equipment)
+        self.__equipment = equipment
+        self.__id = uuid4().int
+        self.__rental_quantity = rental_quantity
+        self.__rental_start = rental_start
+        self.__rental_deadline = rental_deadline
+
+    @property
+    def client(self):
+        return self.__client
+
+    @property
+    def equipment(self):
+        return self.__equipment
+
+    @equipment.setter
+    def equipment(self, equipment):
+        self.__equipment = equipment
+
+    @property
+    def rental_quantity(self):
+        return self.__rental_quantity
+
+    @rental_quantity.setter
+    def rental_quantity(self, rental_quantity):
+        self.__rental_quantity = rental_quantity
+
+    @property
+    def rental_start(self):
+        return self.__rental_start
+
+    @rental_start.setter
+    def rental_start(self, rental_start):
+        self.__rental_start = rental_start
+
+    @property
+    def rental_deadline(self):
+        return self.__rental_deadline
+
+    @rental_deadline.setter
+    def rental_deadline(self, rental_deadline):
+        self.__rental_deadline = rental_deadline

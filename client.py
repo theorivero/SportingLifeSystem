@@ -1,30 +1,37 @@
 from uuid import uuid4
 
-class client:
-    def __init__(self, name, phone_number):
-        self.name = name
-        self.phone_number = phone_number
-        self.id = uuid4().int
-        self.rented_equipment = []
 
+class Client:
+    def __init__(self, name, phone_number):
+        self.__name = name
+        self.__phone_number = phone_number
+        self.__id = uuid4().int
+        self.__rented_equipments = []
+
+    @property
     def return_id(self):
         return self.id
 
-    def return_name(self):
+    @property
+    def name(self):
         return self.name
 
-    def update_name(self,new_name):
-        self.name = new_name
-        return self.name
+    @name.setter
+    def name(self, name):
+        self.name = name
 
-    def return_phone_number(self):
+    @property
+    def phone_number(self):
         return self.phone_number
 
-    def update_phone_number(self, new_phone_number):
-        self.phone_number = new_phone_number
-        return self.phone_number
+    @phone_number.setter
+    def phone_number(self, phone_number):
+        self.phone_number = phone_number
 
-    def return_rented_equipment(self):
-        return self.rented_equipment
+    @property
+    def rented_equipments(self):
+        return self.rented_equipments
 
-
+    @rented_equipments.setter
+    def rented_equipments(self, equipments):
+        self.rented_equipments.append(equipments)
