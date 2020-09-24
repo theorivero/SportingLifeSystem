@@ -33,12 +33,15 @@ class Menu:
         time.sleep(1)
         print(f'Cliente {name} cadastrado com sucesso')
 
-    def register_equipament(self):
-        #name, total_quantity, available_quantity, rental_price
+    def equipament_questions(self):
         name = input('Qual equipamento você quer cadastrar: ')
         total_quantity = input('Você tem quantos equipamentos desse tipo: ')
         available_quantity = input('Quantos estão disponiveis hoje: ')
         rental_price = input('Quanto custa o aluguel mensal desse equipamento: ')
+        return name,total_quantity,available_quantity,rental_price
+
+    def register_equipament(self):
+        name,total_quantity,available_quantity,rental_price = self.equipament_questions()
         new_equipament = Equipment(name, total_quantity, available_quantity, rental_price)
         self.__stock.append(new_equipament)
         time.sleep(1)
