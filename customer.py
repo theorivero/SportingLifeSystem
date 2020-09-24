@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 
-class Client:
+class Customer:
     def __init__(self, name, phone_number):
         self.__name = name
         self.__phone_number = phone_number

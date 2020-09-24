@@ -1,12 +1,12 @@
 from uuid import uuid4
-from client import *
+from customer import *
 from equipment import *
 
 
 class Rent:
-    def __init__(self, client : Client, equipment : Equipment, rental_quantity, rental_start, rental_deadline):
-        self.__client = client
-        self.__client.rented_equipments(equipment)
+    def __init__(self, customer : Customer, equipment : Equipment, rental_quantity, rental_start, rental_deadline):
+        self.__customer = customer
+        self.__customer.rented_equipments(equipment)
         self.__equipment = equipment
         self.__id = uuid4().int
         self.__rental_quantity = rental_quantity
@@ -14,8 +14,8 @@ class Rent:
         self.__rental_deadline = rental_deadline
 
     @property
-    def client(self):
-        return self.__client
+    def customer(self):
+        return self.__customer
 
     @property
     def equipment(self):
