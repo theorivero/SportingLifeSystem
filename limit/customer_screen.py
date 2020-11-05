@@ -34,7 +34,8 @@ class CustomerScreen:
         return {"name": name, "phone_number": phone_number}
 
     def shows_customer_data(self, i, name, phone_number):
-        print("---- Customers List ----")
+        if i == 1:
+            print("---- Customers List ----")
         print(f"Customer N°{i}")
         print(f"Customer Name: {name}")
         print(f"Customer Phone Number: {phone_number}")
