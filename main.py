@@ -1,8 +1,4 @@
-from customer import *
-from equipment import *
-from rent import *
-from menu import *
+from controllers.system_controller import SystemController
 
-if __name__ == "__main__":
-    menu = Menu()
-    menu.start()
+if __name__ == '__main__':
+    SystemController().start_system()

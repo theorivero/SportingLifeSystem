@@ -1,8 +1,6 @@
-from customer import *
-from equipment import *
-from rent import *
+from entity.rent import *
 import time
-import sys
+
 
 class Menu:
     def __init__(self):

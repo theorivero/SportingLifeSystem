@@ -1,6 +1,5 @@
-from uuid import uuid4
-from customer import *
-from equipment import *
+from entity.customer import *
+from entity.equipment import *
 
 
 class Rent:
