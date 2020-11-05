@@ -31,19 +31,19 @@ class Menu:
         time.sleep(1)
         print(f'Cliente {name} cadastrado com sucesso')
 
-    def equipament_questions(self):
-        name = input('Qual equipamento você quer cadastrar: ')
-        total_quantity = input('Você tem quantos equipamentos desse tipo: ')
+    def equipment_questions(self):
+        name = input('Qual equipmento você quer cadastrar: ')
+        total_quantity = input('Você tem quantos equipmentos desse tipo: ')
         available_quantity = input('Quantos estão disponiveis hoje: ')
-        rental_price = input('Quanto custa o aluguel mensal desse equipamento: ')
+        rental_price = input('Quanto custa o aluguel mensal desse equipmento: ')
         return name,total_quantity,available_quantity,rental_price
 
-    def register_equipament(self):
-        name,total_quantity,available_quantity,rental_price = self.equipament_questions()
-        new_equipament = Equipment(name, total_quantity, available_quantity, rental_price)
-        self.__stock.append(new_equipament)
+    def register_equipment(self):
+        name,total_quantity,available_quantity,rental_price = self.equipment_questions()
+        new_equipment = Equipment(name, total_quantity, available_quantity, rental_price)
+        self.__stock.append(new_equipment)
         time.sleep(1)
-        print(f'Equipamento {name} cadastrado no estoque')
+        print(f'equipmento {name} cadastrado no estoque')
 
     
     def start(self):
@@ -54,9 +54,9 @@ class Menu:
             print()
             choice = int(input("""
 1: Cadastrar Cliente
-2: Cadastrar Equipamento
+2: Cadastrar equipmento
 3: Ver base de clientes
-4: Ver estoque de equipamentos
+4: Ver estoque de equipmentos
 5: Fechar sistema
 
 
@@ -65,7 +65,7 @@ Por favor escolha a opção: """))
                 self.register_customer()
                 time.sleep(1)
             if choice == 2: 
-                self.register_equipament()
+                self.register_equipment()
                 time.sleep(1)
             if choice == 3: 
                 for customer in self.customer_base: 
