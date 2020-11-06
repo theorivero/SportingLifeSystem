@@ -1,11 +1,9 @@
-from uuid import uuid4
 
 
 class Equipment:
     def __init__(self, name, total_quantity, available_quantity, rental_price):
         self.__name = name
         self.__total_quantity = int(total_quantity)
-        self.__id = uuid4().int
         self.__available_quantity = int(available_quantity)
         self.__rental_price = int(rental_price)
 

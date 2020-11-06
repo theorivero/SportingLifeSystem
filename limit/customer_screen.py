@@ -1,10 +1,14 @@
+from limit.abstract_screen import AbstractScreen
 
-class CustomerScreen:
+
+class CustomerScreen(AbstractScreen):
+
     def __init__(self, customer_controller):
+        super().__init__()
         self__controller = customer_controller
 
     def screen_options(self):
-        print(' ---- Register Customer ---- ')
+        print(' ---- Customer Screen ---- ')
         print("Choose option")
         print("1: Register Customer")
         print("2: Modify Customer")
@@ -12,26 +16,22 @@ class CustomerScreen:
         print("4: Delete Customer")
         print("0: Return Screen")
 
-        option = int(input("Choose option: "))
+        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3, 4])
         return option
 
-    def request_customer_data(self):
-        print("---- Register Customer ----")
-        name = input("Customer Name: ")
-        phone_number = input("Customer Phone Number: ")
+    def request_customer_data(self, type_method):
+        print(f"---- {type_method}Customer Data ----")
+        name = AbstractScreen.check_letters(self, f"{type_method}Customer Name: ")
+        phone_number = AbstractScreen.check_int(self, f'{type_method}Customer Phone Number: ')
         return {"name": name, "phone_number": phone_number}
 
-    def choose_customer_index(self, customer, todo):
-        print(f"---- {todo} Customer ----")
-        for index, customer in enumerate(customer):
-            print(f"{index+1}º {customer.name}")
-        index_return = int(input(f'Nº of the customer you want to {todo}: '))
-        return index_return-1
-
-    def modify_customer_data(self):
-        name = input("New Customer Name: ")
-        phone_number = input("New Customer Phone Number: ")
-        return {"name": name, "phone_number": phone_number}
+    def choose_customer_index(self, indexs, len_list_costumers):
+        if len_list_costumers == 0:
+            print('0 Registered Costumers')
+            return -1
+        print(f"---- Choose Customer ----")
+        index = AbstractScreen.check_option_int_number(self, f'Nº of the customer: ', indexs)
+        return index-1
 
     def shows_customer_data(self, i, name, phone_number):
         if i == 1:
@@ -40,3 +40,9 @@ class CustomerScreen:
         print(f"Customer Name: {name}")
         print(f"Customer Phone Number: {phone_number}")
         print("------------------------")
+
+    def num_registered_customers(self, customers):
+        print(f"{len(customers)} Registered Customers.")
+
+    def del_customer(self):
+        print("Successful deleted!")

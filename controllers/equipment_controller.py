@@ -3,9 +3,9 @@ from entity.equipment import Equipment
 
 class EquipmentController:
 
-    def __init__(self, systemcontroller):
+    def __init__(self, system_controller):
         self.__equipments = []
-        self.__controller = systemcontroller
+        self.__controller = system_controller
         self.__equipment_screen = EquipmentScreen(self)
         self.__displaying_screen = True
     

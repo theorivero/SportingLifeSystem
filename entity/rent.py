@@ -3,11 +3,10 @@ from entity.equipment import *
 
 
 class Rent:
-    def __init__(self, customer : Customer, equipment : Equipment, rental_quantity, rental_start, rental_deadline):
+    def __init__(self, customer: Customer, equipment: Equipment, rental_quantity, rental_start, rental_deadline):
         self.__customer = customer
         self.__customer.rented_equipments(equipment)
         self.__equipment = equipment
-        self.__id = uuid4().int
         self.__rental_quantity = rental_quantity
         self.__rental_start = rental_start
         self.__rental_deadline = rental_deadline

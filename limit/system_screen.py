@@ -1,8 +1,9 @@
+from limit.abstract_screen import AbstractScreen
 
-
-class SystemScreen:
-    def __init__(self, systemcontroller):
-        self.__controller = systemcontroller
+class SystemScreen(AbstractScreen):
+    def __init__(self, system_controller):
+        super().__init__()
+        self.__controller = system_controller
 
     def screen_options(self):
         print(' ---- System ---- ')
@@ -12,5 +13,5 @@ class SystemScreen:
         print("3: Screen Rent")
         print("0: System Exit")
 
-        option = int(input("Choose option: "))
+        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3])
         return option

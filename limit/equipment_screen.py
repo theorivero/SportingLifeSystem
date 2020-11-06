@@ -1,5 +1,8 @@
-class EquipmentScreen:
+from limit.abstract_screen import AbstractScreen
+
+class EquipmentScreen(AbstractScreen):
     def __init__(self, equipment_controller):
+        super().__init__()
         self__controller = equipment_controller
 
     def screen_options(self):
@@ -11,7 +14,7 @@ class EquipmentScreen:
         print("4: Delete Equipment")
         print("0: Return Screen")
 
-        option = int(input("Choose option: "))
+        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3, 4])
         return option
 
     def request_equipment_data(self):
@@ -36,7 +39,6 @@ class EquipmentScreen:
         equipment.rental_price = input("New Equipment rental price: ")
         return equipment
 
-    
 
     def shows_equipment_data(self, equipments):
         print("---- Equipment List ----")

@@ -1,11 +1,9 @@
-from uuid import uuid4
 
 
 class Customer:
     def __init__(self, name: str, phone_number: int):
         self.__name = name
         self.__phone_number = phone_number
-        self.__id = uuid4().int
         self.__rented_equipments = []
 
     @property

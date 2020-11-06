@@ -10,6 +10,14 @@ class SystemController:
         self.__equipment_controller = EquipmentController(self)
         self.__rent_controller = RentController(self)
 
+    @property
+    def customer_controller(self):
+        return self.__customer_controller
+
+    @property
+    def equipment_controller(self):
+        return self.__equipment_controller
+
     def start_system(self):
         self.open_screen()
 
@@ -20,7 +28,7 @@ class SystemController:
         self.__equipment_controller.open_screen()
 
     def register_rent(self):
-        self.__rent_controller.open_screen(self.__equipment_controller.equipments,self.__customer_controller.customers)
+        self.__rent_controller.open_screen()
 
     def system_exit(self):
         exit(0)
