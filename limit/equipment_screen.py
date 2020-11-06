@@ -6,7 +6,7 @@ class EquipmentScreen(AbstractScreen):
         self__controller = equipment_controller
 
     def screen_options(self):
-        print(' ---- Register Equipment ---- ')
+        print(' ---- Register Screen ---- ')
         print("Choose option")
         print("1: Register Equipment")
         print("2: Modify Equipment")
@@ -17,27 +17,33 @@ class EquipmentScreen(AbstractScreen):
         option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3, 4])
         return option
 
-    def request_equipment_data(self):
+    def request_equipment_data(self, type_method):
         print("---- Register Equipment ----")
-        name = input("Equipment Name: ")
-        total_quantity = input("Equipment quantity: ")
-        available_quantity = input("Equipment available quantity: ")
-        rental_price = input("Equipment rental price: ")
+        name = AbstractScreen.check_exist(self, f"{type_method}Equipment Name: ")
+        total_quantity = AbstractScreen.check_int(self, f"{type_method}Equipment quantity: ")
+        available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",total_quantity)
+        rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price: ")
         return {"name": name,"total_quantity":total_quantity, "available_quantity":available_quantity, "rental_price":rental_price}
 
-    def choose_equipment_index(self, equipments, todo):
-        print(f"---- {todo} Equipment ----")
+    def choose_equipment_index(self, equipments, action, indexs):
+        if len(equipments) == 0:
+            print('0 Registered Equipment')
+            return -1
+        print(f"---- {action} Equipment ----")
         for index,equipment in enumerate(equipments):
             print(f"{index+1}º {equipment.name}")
-        index_return = int(input(f'Nº of the equipment you want to {todo}: '))
+        index_return = AbstractScreen.check_option_int_number(self, f'Nº of the equipment you want to {action}: ', indexs)
         return index_return-1
 
-    def modify_equipment_data(self, equipment):
-        equipment.name = input("New Equipment Name: ")
-        equipment.total_quantity = input("New Equipment quantity: ")
-        equipment.available_quantity = input("New Equipment available quantity: ")
-        equipment.rental_price = input("New Equipment rental price: ")
-        return equipment
+    
+
+    def modify_equipment_data(self, new_equipment, type_method):
+        new_equipment.name = AbstractScreen.check_exist(self, f"{type_method}Equipment Name: ")
+        new_equipment.total_quantity = AbstractScreen.check_int(self, f"{type_method}Equipment quantity: ")
+        new_equipment.available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",equipment.total_quantity)
+        new_equipment.rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price: ")
+
+        return new_equipment
 
 
     def shows_equipment_data(self, equipments):
