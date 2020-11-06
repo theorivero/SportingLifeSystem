@@ -1,12 +1,14 @@
 from limit.system_screen import SystemScreen
 from controllers.customer_controller import CustomerController
 from controllers.equipment_controller import EquipmentController
+from controllers.rent_controller import RentController
 
 class SystemController:
     def __init__(self):
         self.__system_screen = SystemScreen(self)
         self.__customer_controller = CustomerController(self)
         self.__equipment_controller = EquipmentController(self)
+        self.__rent_controller = RentController(self)
 
     def start_system(self):
         self.open_screen()
@@ -18,7 +20,7 @@ class SystemController:
         self.__equipment_controller.open_screen()
 
     def register_rent(self):
-        pass
+        self.__rent_controller.open_screen(self.__equipment_controller.equipments,self.__customer_controller.customers)
 
     def system_exit(self):
         exit(0)

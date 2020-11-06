@@ -8,6 +8,11 @@ class EquipmentController:
         self.__controller = systemcontroller
         self.__equipment_screen = EquipmentScreen(self)
         self.__displaying_screen = True
+    
+    @property
+    def equipments(self):
+        return self.__equipments
+
 
     def register_equipment(self):
         equipment_data = self.__equipment_screen.request_equipment_data()
