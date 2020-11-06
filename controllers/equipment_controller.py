@@ -10,9 +10,12 @@ class EquipmentController:
         self.__displaying_screen = True
     
     @property
+    def equipment_screen(self):
+        return self.__equipment_screen
+
+    @property
     def equipments(self):
         return self.__equipments
-
 
     def register_equipment(self):
         equipment_data = self.__equipment_screen.request_equipment_data("")

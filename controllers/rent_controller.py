@@ -10,9 +10,10 @@ class RentController:
         self.__rent_screen = RentScreen(self)
         self.__displaying_screen = True
 
-    def register_rent(self):
+    def register_rent_(self):
         rent_data = self.__rent_screen.request_rent_data('')
         customers = self.__controller.customer_controller.customers
+        equipments = self.__controller.equipment_controller
         rent_customer = None
         rent_equipment = None
         if len(customers) == 0:
@@ -31,6 +32,19 @@ class RentController:
         new_rent = Rent(rent_customer, rent_equipment, rent_data['rental_quantity'], rent_data['rental_start'],
                         rent_data['rental_deadline'])
         self.__rents.append(new_rent)
+
+    def register_rent(self):
+        equipment_controller = self.__controller.equipment_controller
+        #rent_data = self.__rent_screen.request_rent_data('')
+
+        customers = self.__controller.customer_controller.customers
+        equipments = equipment_controller.equipments
+
+        indexs = []
+        for i,v in enumerate(equipment_controller.equipments):
+            indexs.append(i+1)
+        rent_equipment_index = equipment_controller.equipment_screen.choose_equipment_index(equipments,"rent", indexs)
+        print(equipments[rent_equipment_index])
 
     def list_rents(self):
         i = 0
