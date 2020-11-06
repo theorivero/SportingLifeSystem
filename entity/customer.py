@@ -7,10 +7,6 @@ class Customer:
         self.__rented_equipments = []
 
     @property
-    def return_id(self):
-        return self.__id
-
-    @property
     def name(self):
         return self.__name
 

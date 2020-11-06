@@ -19,16 +19,8 @@ class RentScreen(AbstractScreen):
 
     def request_rent_data(self, type_method):
         print("---- Register Rent ----")
-        customer_phone_number = AbstractScreen.check_int(self, f'{type_method}Customer Phone Number: ')
-        equipment_name = AbstractScreen.check_letters(self, f"{type_method}Equipment Name: ")
-        rental_quantity = AbstractScreen.check_int(self, f'{type_method}Rental Quantity: ')
-        rental_start = input("Rental Start: ")
-        rental_deadline = input("Rental Deadline: ")
-        return {"customer_phone_number": customer_phone_number,
-                "equipment_name": equipment_name,
-                'rental_quantity': rental_quantity,
-                'rental_start': rental_start,
-                'rental_deadline': rental_deadline}
+        weeks_quantity = AbstractScreen.check_int(self, f'{type_method}Rental Quantity: ')
+        return {"weeks_quantity": weeks_quantity}
 
     def shows_rent_data(self, i, customer_name, customer_phone_number, equipment_name,
                         rental_quantity, rental_start, rental_deadline):

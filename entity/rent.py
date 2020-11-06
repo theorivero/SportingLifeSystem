@@ -3,13 +3,11 @@ from entity.equipment import *
 
 
 class Rent:
-    def __init__(self, customer: Customer, equipment: Equipment, rental_quantity, rental_start, rental_deadline):
+    def __init__(self, customer: Customer, equipment: Equipment, weeks_quantity):
         self.__customer = customer
-        self.__customer.rented_equipments(equipment)
+        self.__customer.rented_equipments.append(equipment)
         self.__equipment = equipment
-        self.__rental_quantity = rental_quantity
-        self.__rental_start = rental_start
-        self.__rental_deadline = rental_deadline
+        self.__weeks_quantity = weeks_quantity
 
     @property
     def customer(self):
@@ -24,25 +22,9 @@ class Rent:
         self.__equipment = equipment
 
     @property
-    def rental_quantity(self):
-        return self.__rental_quantity
+    def weeks_quantity(self):
+        return self.__weeks_quantity
 
-    @rental_quantity.setter
-    def rental_quantity(self, rental_quantity):
-        self.__rental_quantity = rental_quantity
-
-    @property
-    def rental_start(self):
-        return self.__rental_start
-
-    @rental_start.setter
-    def rental_start(self, rental_start):
-        self.__rental_start = rental_start
-
-    @property
-    def rental_deadline(self):
-        return self.__rental_deadline
-
-    @rental_deadline.setter
-    def rental_deadline(self, rental_deadline):
-        self.__rental_deadline = rental_deadline
+    @weeks_quantity.setter
+    def weeks_quantity(self, weeks_quantity):
+        self.__weeks_quantity = weeks_quantity
