@@ -35,16 +35,28 @@ class RentController:
 
     def register_rent(self):
         equipment_controller = self.__controller.equipment_controller
+        customer_controller = self.__controller.customer_controller
         #rent_data = self.__rent_screen.request_rent_data('')
 
-        customers = self.__controller.customer_controller.customers
+        customers = customer_controller.customers
         equipments = equipment_controller.equipments
 
-        indexs = []
+        indexs_equip = []
         for i,v in enumerate(equipment_controller.equipments):
-            indexs.append(i+1)
-        rent_equipment_index = equipment_controller.equipment_screen.choose_equipment_index(equipments,"rent", indexs)
+            indexs_equip.append(i+1)
+        rent_equipment_index = equipment_controller.equipment_screen.choose_equipment_index(equipments,"rent", indexs_equip)
         print(equipments[rent_equipment_index])
+
+        i = 0
+        for customer in customers:
+            i += 1
+            customer_controller.customer_screen.shows_customer_data(i, customer.name, customer.phone_number)
+        indexs_customer = range(1, i + 1)
+        index_customer_rent = customer_controller.customer_screen.choose_customer_index(indexs_customer, len(customers))
+        if index_customer_rent == -1:
+            return None
+        customer_rent = customers[index_customer_rent]
+        print(customer_rent)
 
     def list_rents(self):
         i = 0

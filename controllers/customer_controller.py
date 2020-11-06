@@ -14,6 +14,10 @@ class CustomerController:
     def customers(self):
         return self.__customers
 
+    @property
+    def customer_screen(self):
+        return self.__customer_screen
+
     def register_customer(self):
         customer_data = self.__customer_screen.request_customer_data("")
         new_customer = Customer(customer_data["name"], customer_data["phone_number"])
