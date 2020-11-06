@@ -13,30 +13,7 @@ class RentController:
     @property
     def rents(self):
         return self.__rents
-
-    def register_rent_(self):
-        rent_data = self.__rent_screen.request_rent_data('')
-        customers = self.__controller.customer_controller.customers
-        equipments = self.__controller.equipment_controller
-        rent_customer = None
-        rent_equipment = None
-        if len(customers) == 0:
-            return self.__controller.customer_controller.list_customers()
-        for customer in customers:
-            if customer.phone_number == rent_data['customer_phone_number']:
-                rent_customer = customer
-        '''equipments = self.__controller.equipment_controller.equipments
-        if len(equipments) == 0:
-            return self.__controller.equipment_controller.list_equipments
-        for equipment in equipments:
-            if equipment.name == rent_data['equipment_name']:
-                rent_equipment = equipment'''
-        rent_customer.__rented_equipments.append(rent_equipment)
-        #rent_equipment.__available_quantity -= rent_data['rental_quantity']
-        new_rent = Rent(rent_customer, rent_equipment, rent_data['rental_quantity'], rent_data['rental_start'],
-                        rent_data['rental_deadline'])
-        self.__rents.append(new_rent)
-
+    
     def register_rent(self):
         equipment_controller = self.__controller.equipment_controller
         customer_controller = self.__controller.customer_controller
@@ -64,15 +41,19 @@ class RentController:
         self.__rents.append(Rent(customer_rent, equipment_rent, rent_data["weeks_quantity"]))
 
     def list_rents(self):
-        i = 0
-        for rent in self.__rents:
-            i += 1
-            self.__rent_screen.shows_rent_data(i, rent.customer.name, rent.customer.phone_number, rent.equipment.name,
-                                               rent.rental_quantity, rent.rental_start, rent.rental_deadline)
-        self.__rent_screen.num_registered_rents(self.__rents)
+        self.__rent_screen.shows_rent_data(self.__rents)
 
     def delete_rent(self):
-        pass
+        indexs = []
+        for i,v in enumerate(self.rents):
+            indexs.append(i+1)
+        self.__rent_screen.shows_rent_data(self.__rents)
+        index_delete = self.__rent_screen.choose_rent_index(self.rents,"Delete", indexs)
+        if index_delete == -1:
+            return None
+        else:
+            del self.rents[index_delete] 
+
 
     def return_screen(self):
         self.__displaying_screen = False
@@ -86,3 +67,4 @@ class RentController:
             chosen_option = self.__rent_screen.screen_options()
             chosen_method = switcher[chosen_option]
             chosen_method()
+
