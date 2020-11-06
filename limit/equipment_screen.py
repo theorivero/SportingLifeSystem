@@ -22,7 +22,7 @@ class EquipmentScreen(AbstractScreen):
         name = AbstractScreen.check_exist(self, f"{type_method}Equipment Name: ")
         total_quantity = AbstractScreen.check_int(self, f"{type_method}Equipment quantity: ")
         available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",total_quantity)
-        rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price: ")
+        rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price per week: ")
         return {"name": name,"total_quantity":total_quantity, "available_quantity":available_quantity, "rental_price":rental_price}
 
     def choose_equipment_index(self, equipments, action, indexs):
@@ -40,8 +40,8 @@ class EquipmentScreen(AbstractScreen):
     def modify_equipment_data(self, new_equipment, type_method):
         new_equipment.name = AbstractScreen.check_exist(self, f"{type_method}Equipment Name: ")
         new_equipment.total_quantity = AbstractScreen.check_int(self, f"{type_method}Equipment quantity: ")
-        new_equipment.available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",equipment.total_quantity)
-        new_equipment.rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price: ")
+        new_equipment.available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",new_equipment.total_quantity)
+        new_equipment.rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price per week: ")
 
         return new_equipment
 
@@ -54,7 +54,7 @@ class EquipmentScreen(AbstractScreen):
             print(f"Equipment Name: {equipment.name}")
             print(f"Equipment quantity: {equipment.total_quantity}")
             print(f"Equipment available quantity: {equipment.available_quantity}")
-            print(f"Equipment rental price: {equipment.rental_price}")
+            print(f"Equipment rental price per week: {equipment.rental_price}")
             print("------------------------")
             i += 1 
 
