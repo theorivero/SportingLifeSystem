@@ -14,15 +14,15 @@ class EquipmentScreen(AbstractScreen):
         print("4: Delete Equipment")
         print("0: Return Screen")
 
-        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3, 4])
+        option = self.check_option_int_number('Choose Number: ', [0, 1, 2, 3, 4])
         return option
 
     def request_equipment_data(self, type_method):
         print("---- Register Equipment ----")
-        name = AbstractScreen.check_exist(self, f"{type_method}Equipment Name: ")
-        total_quantity = AbstractScreen.check_int(self, f"{type_method}Equipment quantity: ")
-        available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",total_quantity)
-        rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price per week: ")
+        name = self.check_exist(f"{type_method}Equipment Name: ")
+        total_quantity = self.check_int(f"{type_method}Equipment quantity: ")
+        available_quantity = self.check_less_than_total(f"{type_method}Equipment available quantity: ",total_quantity)
+        rental_price = self.check_int(f"{type_method}Equipment rental price per week: ")
         return {"name": name,"total_quantity":total_quantity, "available_quantity":available_quantity, "rental_price":rental_price}
 
     def choose_equipment_index(self, equipments, action, indexs):
@@ -32,16 +32,16 @@ class EquipmentScreen(AbstractScreen):
         print(f"---- {action} Equipment ----")
         for index,equipment in enumerate(equipments):
             print(f"{index+1}º {equipment.name}")
-        index_return = AbstractScreen.check_option_int_number(self, f'Nº of the equipment you want to {action}: ', indexs)
+        index_return = self.check_option_int_number(f'Nº of the equipment you want to {action}: ', indexs)
         return index_return-1
 
     
 
     def modify_equipment_data(self, new_equipment, type_method):
-        new_equipment.name = AbstractScreen.check_exist(self, f"{type_method}Equipment Name: ")
-        new_equipment.total_quantity = AbstractScreen.check_int(self, f"{type_method}Equipment quantity: ")
-        new_equipment.available_quantity = AbstractScreen.check_less_than_total(self,f"{type_method}Equipment available quantity: ",new_equipment.total_quantity)
-        new_equipment.rental_price = AbstractScreen.check_int(self, f"{type_method}Equipment rental price per week: ")
+        new_equipment.name = self.check_exist(f"{type_method}Equipment Name: ")
+        new_equipment.total_quantity = self.check_int(f"{type_method}Equipment quantity: ")
+        new_equipment.available_quantity = self.check_less_than_total(f"{type_method}Equipment available quantity: ",new_equipment.total_quantity)
+        new_equipment.rental_price = self.check_int(f"{type_method}Equipment rental price per week: ")
 
         return new_equipment
 
