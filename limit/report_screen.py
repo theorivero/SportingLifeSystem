@@ -15,7 +15,7 @@ class ReportScreen(AbstractScreen):
             [sg.Text('Nº total de equipamentos: ', size=(25, 1)), sg.Text(report_values["equipments_total_quantity"])],
             [sg.Text('Nº de equipamentos disponíveis: ', size=(25, 1)), sg.Text(report_values["equipments_available_quantity"])],
             [sg.Text('Nº de aluguéis: ', size=(25, 1)), sg.Text(report_values["total_rents"])],
-            [sg.Text('Faturamento em R$: ', size=(25, 1)), sg.Text(report_values["equipments_available_quantity"])],
+            [sg.Text('Faturamento em R$: ', size=(25, 1)), sg.Text(report_values["total_money"])],
             [sg.Text('N° de semanas alugadas: ', size=(25, 1)), sg.Text(report_values["total_rent_weeks"])],
         ]
         self.__window = sg.Window('Report', layout=layout, size=(500,250), finalize=True)
