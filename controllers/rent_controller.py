@@ -1,70 +1,100 @@
 from limit.rent_screen import RentScreen
+from limit.rent_screen_2 import RentCreateScreen
 from entity.rent import Rent
+from dao.rentdao import RentDao
+from controllers.customer_controller import CustomerController
+from controllers.equipment_controller import EquipmentController
+
+from entity.equipment import Equipment
 
 
 class RentController:
+    __instance = None
 
-    def __init__(self, system_controller):
-        self.__rents = []
-        self.__controller = system_controller
-        self.__rent_screen = RentScreen(self)
-        self.__displaying_screen = True
+    def __init__(self):
+        self.__rentdao = RentDao()
+        self.__rent_screen = RentScreen()
+        self.__rent_create_screen = RentCreateScreen()
+        self.__customer_controller = CustomerController()
+        self.__equipment_controller = EquipmentController()
+
+    def __new__(cls):
+        if RentController.__instance is None:
+            RentController.__instance = object.__new__(cls)
+        return RentController.__instance
+
+    @property
+    def customer_controller(self):
+        return self.__customer_controller
 
     @property
     def rents(self):
-        return self.__rents
-    
-    def register_rent(self):
-        equipment_controller = self.__controller.equipment_controller
-        customer_controller = self.__controller.customer_controller
+        return self.__rentdao.get_all()
 
-        customers = customer_controller.customers
-        equipments = equipment_controller.equipments
+    @property
+    def rent_screen(self):
+        return self.__rent_screen
 
-        i = 0
-        for customer in customers:
-            i += 1
-            customer_controller.customer_screen.shows_customer_data(i, customer.name, customer.phone_number)
-        indexs_customer = range(1, i + 1)
-        index_customer_rent = customer_controller.customer_screen.choose_customer_index(indexs_customer, len(customers))
-        if index_customer_rent == -1:
-            return None
-        customer_rent = customers[index_customer_rent]
+    @property
+    def rent_create_screen(self):
+        return self.__rent_create_screen
 
-        indexs_equip = []
-        for i, v in enumerate(equipment_controller.equipments):
-            indexs_equip.append(i+1)
-        rent_equipment_index = equipment_controller.equipment_screen.choose_equipment_index(equipments, "rent", indexs_equip)
-        equipment_rent = equipments[rent_equipment_index]
+    @staticmethod
+    def system_exit():
+        exit(0)
 
-        rent_data = self.__rent_screen.request_rent_data("")
-        self.__rents.append(Rent(customer_rent, equipment_rent, rent_data["weeks_quantity"]))
+    def register_rent(self, phone, equipment_name, rental_weeks):
+        try:
+            customer = self.customer_controller.customerdao.get(phone)
+            equipment = self.__equipment_controller.equipmentdao.get(equipment_name)
+            new_rent = Rent(customer, equipment, rental_weeks)
+            self.__rentdao.add(new_rent)
+            self.__rent_screen.show_message('Register', 'Successful registered')
+        except Exception:
+            self.__rent_screen.show_message('Error', 'Try Again')
 
-    def list_rents(self):
-        self.__rent_screen.shows_rent_data(self.__rents)
+    def modify_rent(self, phone, equipment_name, rental_weeks, option):
+        customer = self.customer_controller.customerdao.get(phone)
+        equipment = self.__equipment_controller.equipmentdao.get(equipment_name)
+        new_rent = Rent(customer, equipment, rental_weeks)
+        self.__rentdao.remove(option[0][0].split()[-1])
+        self.__rentdao.add(new_rent)
+        self.__rent_screen.show_message('Modify', 'Successful modified')
 
-    def delete_rent(self):
-        indexs = []
-        for i,v in enumerate(self.rents):
-            indexs.append(i+1)
-        self.__rent_screen.shows_rent_data(self.__rents)
-        index_delete = self.__rent_screen.choose_rent_index(self.rents,"Delete", indexs)
-        if index_delete == -1:
-            return None
-        else:
-            del self.rents[index_delete] 
-
-
-    def return_screen(self):
-        self.__displaying_screen = False
+    def del_rent(self, option):
+        self.__rentdao.remove(option[0][0].split()[-1])
+        self.__rent_screen.show_message('Del', 'Successful deleted')
 
     def open_screen(self):
-        switcher = {0: self.return_screen,
-                    1: self.register_rent,
-                    2: self.list_rents,
-                    3: self.delete_rent}
-        while self.__displaying_screen:
-            chosen_option = self.__rent_screen.screen_options()
+        chosen_option, dicti = self.__rent_screen.screen_options([f'Equipment name: {rent.equipment.name} | Customer phone: {rent.customer.phone_number} | Price: {rent.price} | ID: {rent.id}' for rent in self.__rentdao.get_all()])
+        switcher = {'createrent': self.open_create_screen,
+                    'modifyrent': self.open_modify_screen,
+                    'deleterent': self.del_rent,
+                    None: self.__rent_screen.close_screen
+                    }
+        self.__rent_screen.close_screen()
+        if (chosen_option == 'modifyrent') or (chosen_option == 'deleterent'):
+            chosen_method = switcher[chosen_option]
+            chosen_method(dicti)
+        else:
             chosen_method = switcher[chosen_option]
             chosen_method()
 
+    def open_create_screen(self):
+        chosen_option, dicti = self.__rent_create_screen.screen_options()
+        if chosen_option is None:
+            self.__rent_create_screen.close_screen()
+        else:
+            self.__rent_create_screen.close_screen()
+            self.register_rent(dicti['phone'], dicti['equipmentname'], dicti['rentalweeks'])
+
+    def open_modify_screen(self, option):
+        if len(self.rents) == 0:
+            self.__rent_screen.show_message('Error', '0 Registered Customers')
+        else:
+            chosen_option, dicti = self.__rent_create_screen.screen_options()
+            if chosen_option is None:
+                self.__rent_create_screen.close_screen()
+            else:
+                self.__rent_create_screen.close_screen()
+                self.modify_rent(dicti['phone'], dicti['equipmentname'], dicti['rentalweeks'], option)

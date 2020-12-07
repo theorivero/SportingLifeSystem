@@ -41,17 +41,20 @@ class EquipmentController:
     def register_equipment(self, name, total_quantity, available_quantity, rental_price):
         new_equipment = Equipment(name, total_quantity, available_quantity, rental_price)
         self.__equipmentdao.add(new_equipment)
+        self.__equipment_screen.show_message('Register', 'Successful registered')
 
     def modify_equipment(self,  name, total_quantity, available_quantity, rental_price, option):
-        new_equipment = Equipment( name, total_quantity, available_quantity, rental_price)
-        self.__equipmentdao.remove(option[0][0])
+        new_equipment = Equipment(name, total_quantity, available_quantity, rental_price)
+        self.__equipmentdao.remove(option[0][0].split()[0])
         self.__equipmentdao.add(new_equipment)
+        self.__equipment_screen.show_message('Modify', 'Successful modified')
 
     def del_equipment(self, option):
-        self.__equipmentdao.remove(option[0][0])
+        self.__equipmentdao.remove(option[0][0].split()[0])
+        self.__equipment_screen.show_message('Del', 'Successful deleted')
 
     def open_screen(self):
-        chosen_option, dicti = self.__equipment_screen.screen_options([f"{equipment.name} Total_Quantity: {equipment.total_quantity} Price: {equipment.rental_price}" for equipment in self.__equipmentdao.get_all()])
+        chosen_option, dicti = self.__equipment_screen.screen_options([f"{equipment.name} | Total quantity: {equipment.total_quantity} | Price: {equipment.rental_price}" for equipment in self.__equipmentdao.get_all()])
         switcher = {'createequipment': self.open_create_screen,
                     'modifyequipment': self.open_modify_screen,
                     'deleteequipment': self.del_equipment,

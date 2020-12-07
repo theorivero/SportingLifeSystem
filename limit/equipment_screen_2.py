@@ -21,6 +21,8 @@ class EquipmentCreateScreen(AbstractScreen):
     def screen_options(self):
         self.init_components()
         button, values = self.__window.Read()
+        if button is None:
+            return None, None
         if self.check_int(values['total_quantity']) and self.check_int(values['available_quantity'])  and self.check_int(values['rental_price']):
             return button, values
         else:

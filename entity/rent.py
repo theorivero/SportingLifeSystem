@@ -9,8 +9,8 @@ class Rent:
         self.__customer = customer
         self.__customer.rented_equipments.append(equipment)
         self.__equipment = equipment
-        self.__weeks_quantity = weeks_quantity
-        self.__price = equipment.rental_price * weeks_quantity
+        self.__weeks_quantity = int(weeks_quantity)
+        self.__price = equipment.rental_price * int(weeks_quantity)
     @property
     def customer(self):
         return self.__customer

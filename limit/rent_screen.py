@@ -1,45 +1,29 @@
 from limit.abstract_screen import AbstractScreen
+import PySimpleGUI as sg
+
 
 class RentScreen(AbstractScreen):
-    def __init__(self, rent_controller):
+
+    def __init__(self):
         super().__init__()
-        self__controller = rent_controller
+        self.__window = None
 
-    def screen_options(self):
-        print(' ---- Rent Screen ---- ')
-        print("Choose option")
-        print("1: Register Rent")
-        print("2: List Rent")
-        print("3: Delete Rent")
-        print("0: Return Screen")
+    def init_components(self, rents):
+        sg.theme('DarkGrey5')
+        layout = [
+            [sg.Listbox(values=rents, size=(60,5))],
+            [sg.Btn('Criar Aluguel', key='createrent'),sg.Btn('Modificar', key='modifyrent'), sg.Btn('Excluir', key='deleterent')]
+        ]
+        self.__window = sg.Window('Customer Screen', layout=layout, size=(500,150), finalize=True)
 
-        option = self.check_option_int_number('Choose Number: ', [0, 1, 2, 3])
-        return option
+    def screen_options(self, rents):
+        self.init_components(rents)
+        button, values = self.__window.Read()
+        return button, values
 
-    def request_rent_data(self, type_method):
-        print("---- Register Rent ----")
-        weeks_quantity = self.check_int(f'{type_method}Rental weeks: ')
-        return {"weeks_quantity": weeks_quantity}
+    def close_screen(self):
+        self.__window.Close()
 
-    def shows_rent_data(self, rents):
-        i = 1
-        print("---- Rents List ----")
-        for rent in rents:
-            print(f"Rent N°{i}")
-            print(f"Customer Name: {rent.customer.name}")
-            print(f"Customer Phone Number: {rent.customer.phone_number}")
-            print(f"Equipment Name: {rent.equipment.name}")
-            print(f"Rental weeks: {rent.weeks_quantity}")
-            print(f"Rental price: {rent.price}")
-            print("------------------------")
-            i +=1
-    def num_registered_rents(self, rents):
-        print(f"{len(rents)} Registered Rents.")
-
-    def choose_rent_index(self, rents, action, indexs):
-        if len(rents) == 0:
-            print('0 Registered Rents')
-            return -1
-        index_return = self.check_option_int_number(f'Nº of the equipment you want to {action}: ', indexs)
-        return index_return-1
-
+    @staticmethod
+    def show_message(title, message):
+        sg.Popup(title, message)
