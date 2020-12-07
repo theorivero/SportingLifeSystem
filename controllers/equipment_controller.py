@@ -1,62 +1,81 @@
 from limit.equipment_screen import EquipmentScreen
+from limit.equipment_screen_2 import EquipmentCreateScreen
 from entity.equipment import Equipment
+from dao.equipmentdao import EquipmentDao
+
 
 class EquipmentController:
+    __instance = None
 
-    def __init__(self, system_controller):
-        self.__equipments = []
-        self.__controller = system_controller
-        self.__equipment_screen = EquipmentScreen(self)
-        self.__displaying_screen = True
-    
+    def __init__(self):
+        self.__equipmentdao = EquipmentDao()
+
+        self.__equipment_screen = EquipmentScreen()
+        self.__equipment_create_screen = EquipmentCreateScreen()
+
+    def __new__(cls):
+        if EquipmentController.__instance is None:
+            EquipmentController.__instance = object.__new__(cls)
+        return EquipmentController.__instance
+
+    @property
+    def equipments(self):
+        return self.__equipmentdao.get_all()
+
     @property
     def equipment_screen(self):
         return self.__equipment_screen
 
     @property
-    def equipments(self):
-        return self.__equipments
+    def equipment_create_screen(self):
+        return self.__equipment_create_screen
 
-    def register_equipment(self):
-        equipment_data = self.__equipment_screen.request_equipment_data("")
-        new_equipment = Equipment(equipment_data["name"], equipment_data["total_quantity"], 
-                                    equipment_data["available_quantity"],equipment_data["rental_price"])
-        self.__equipments.append(new_equipment)
-    
-    def list_equipments(self):
-        self.__equipment_screen.shows_equipment_data(self.__equipments)
+    @staticmethod
+    def system_exit():
+        exit(0)
 
-    def delete_equipment(self):
-        indexs = []
-        for i,v in enumerate(self.__equipments):
-            indexs.append(i+1)
-        index_delete = self.__equipment_screen.choose_equipment_index(self.__equipments,"Delete", indexs)
-        if index_delete == -1:
-            return None
-        else:
-            del self.__equipments[index_delete] 
-    
-    def modify_equipment(self):
-        indexs = []
-        for i,v in enumerate(self.__equipments):
-            indexs.append(i+1)
-        index_modify = self.__equipment_screen.choose_equipment_index(self.__equipments,"Modify", indexs)
-        if index_modify == -1:
-            return None
-        else:
-            modified_equipment = self.__equipment_screen.modify_equipment_data(self.__equipments[index_modify], "Modify")
-            self.__equipments[index_modify] = modified_equipment
-        
-    def return_screen(self):
-        self.__displaying_screen = False
+    def register_equipment(self, name, total_quantity, available_quantity, rental_price):
+        new_equipment = Equipment(name, total_quantity, available_quantity, rental_price)
+        self.__equipmentdao.add(new_equipment)
+
+    def modify_equipment(self,  name, total_quantity, available_quantity, rental_price, option):
+        new_equipment = Equipment( name, total_quantity, available_quantity, rental_price)
+        self.__equipmentdao.remove(option[0][0])
+        self.__equipmentdao.add(new_equipment)
+
+    def del_equipment(self, option):
+        self.__equipmentdao.remove(option[0][0])
 
     def open_screen(self):
-        switcher = {0: self.return_screen,
-                    1: self.register_equipment,
-                    2: self.modify_equipment,
-                    3: self.list_equipments,
-                    4: self.delete_equipment}
-        while self.__displaying_screen:
-            chosen_option = self.__equipment_screen.screen_options()
+        chosen_option, dicti = self.__equipment_screen.screen_options([equipment.name for equipment in self.__equipmentdao.get_all()])
+        switcher = {'createequipment': self.open_create_screen,
+                    'modifyequipment': self.open_modify_screen,
+                    'deleteequipment': self.del_equipment,
+                    None: self.__equipment_screen.close_screen
+                    }
+        self.__equipment_screen.close_screen()
+        if (chosen_option == 'modifyequipment') or (chosen_option == 'deleteequipment'):
+            chosen_method = switcher[chosen_option]
+            chosen_method(dicti)
+        else:
             chosen_method = switcher[chosen_option]
             chosen_method()
+
+    def open_create_screen(self):
+        chosen_option, dicti = self.__equipment_create_screen.screen_options()
+        if chosen_option is None:
+            self.__equipment_create_screen.close_screen()
+        else:
+            self.__equipment_create_screen.close_screen()
+            self.register_equipment(dicti['name'], dicti['total_quantity'], dicti['available_quantity'], dicti['rental_price'])
+
+    def open_modify_screen(self, option):
+        if len(self.equipments) == 0:
+            self.__equipment_screen.show_message('Error', '0 Registered Equipments')
+        else:
+            chosen_option, dicti = self.__equipment_create_screen.screen_options()
+            if chosen_option is None:
+                self.__equipment_create_screen.close_screen()
+            else:
+                self.__equipment_create_screen.close_screen()
+                self.modify_equipment(dicti['name'], dicti['total_quantity'], dicti['available_quantity'], dicti['rental_price'], option)

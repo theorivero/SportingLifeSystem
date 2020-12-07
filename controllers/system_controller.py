@@ -9,7 +9,7 @@ class SystemController:
     def __init__(self):
         self.__system_screen = SystemScreen()
         self.__customer_controller = CustomerController()
-        self.__equipment_controller = EquipmentController(self)
+        self.__equipment_controller = EquipmentController()
         self.__rent_controller = RentController(self)
 
     def __new__(cls):
