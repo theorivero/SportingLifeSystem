@@ -13,5 +13,5 @@ class SystemScreen(AbstractScreen):
         print("3: Screen Rent")
         print("0: System Exit")
 
-        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3])
+        option = self.check_option_int_number('Choose Number: ', [0, 1, 2, 3])
         return option

@@ -13,12 +13,12 @@ class RentScreen(AbstractScreen):
         print("3: Delete Rent")
         print("0: Return Screen")
 
-        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3])
+        option = self.check_option_int_number('Choose Number: ', [0, 1, 2, 3])
         return option
 
     def request_rent_data(self, type_method):
         print("---- Register Rent ----")
-        weeks_quantity = AbstractScreen.check_int(self, f'{type_method}Rental weeks: ')
+        weeks_quantity = self.check_int(f'{type_method}Rental weeks: ')
         return {"weeks_quantity": weeks_quantity}
 
     def shows_rent_data(self, rents):
@@ -40,6 +40,6 @@ class RentScreen(AbstractScreen):
         if len(rents) == 0:
             print('0 Registered Rents')
             return -1
-        index_return = AbstractScreen.check_option_int_number(self, f'Nº of the equipment you want to {action}: ', indexs)
+        index_return = self.check_option_int_number(f'Nº of the equipment you want to {action}: ', indexs)
         return index_return-1
 

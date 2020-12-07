@@ -16,13 +16,13 @@ class CustomerScreen(AbstractScreen):
         print("4: Delete Customer")
         print("0: Return Screen")
 
-        option = AbstractScreen.check_option_int_number(self, 'Choose Number: ', [0, 1, 2, 3, 4])
+        option = self.check_option_int_number('Choose Number: ', [0, 1, 2, 3, 4])
         return option
 
     def request_customer_data(self, type_method):
         print(f"---- {type_method}Customer Data ----")
-        name = AbstractScreen.check_letters(self, f"{type_method}Customer Name: ")
-        phone_number = AbstractScreen.check_int(self, f'{type_method}Customer Phone Number: ')
+        name = self.check_letters(f"{type_method}Customer Name: ")
+        phone_number = self.check_int(f'{type_method}Customer Phone Number: ')
         return {"name": name, "phone_number": phone_number}
 
     def choose_customer_index(self, indexs, len_list_costumers):
@@ -30,7 +30,8 @@ class CustomerScreen(AbstractScreen):
             print('0 Registered Costumers')
             return -1
         print(f"---- Choose Customer ----")
-        index = AbstractScreen.check_option_int_number(self, f'Nº of the customer: ', indexs)
+#testar
+        index = self.check_option_int_number(f'Nº of the customer: ', indexs)
         return index-1
 
     def shows_customer_data(self, i, name, phone_number):
