@@ -26,30 +26,29 @@ class AbstractScreen(ABC):
 
     def check_int(self, msg):
         while True:
-            check_value = input(msg)
+            check_value = msg
             try:
                 integer = int(check_value)
                 if integer < 0:
-                    raise ValueError
-                return integer
+                    return False
+                return True
             except ValueError:
-                print("Only insert numbers.")
+                return False
 
     def check_letters(self, msg):
-        while True:
-            exist = False
-            check_str = input(msg)
-            try:
-                for letter in check_str:
-                    if letter.lower() not in list(string.ascii_lowercase) :
-                        raise LetterException
-                    if letter != " ":
-                        exist = True
-                if exist == False:
-                    raise NotExistException                       
-                return check_str
-            except Exception:
-                print("Only insert letters.")
+        exist = False
+        check_str = msg
+        try:
+            for letter in check_str.replace(" ", ""):
+                if letter.lower() not in list(string.ascii_lowercase):
+                    return False
+                if letter != " ":
+                    exist = True
+            if not exist:
+                return False
+            return True
+        except Exception:
+            return False
 
     def check_exist(self, msg):
         while True:
