@@ -2,6 +2,7 @@ from limit.system_screen import SystemScreen
 from controllers.customer_controller import CustomerController
 from controllers.equipment_controller import EquipmentController
 from controllers.rent_controller2 import RentController
+from controllers.report_controller import ReportController
 
 class SystemController:
     __instance = None
@@ -10,6 +11,7 @@ class SystemController:
         self.__system_screen = SystemScreen()
         self.__customer_controller = CustomerController()
         self.__equipment_controller = EquipmentController()
+        self.__report_controller = ReportController()
         self.__rent_controller = RentController()
 
     def __new__(cls):
@@ -36,6 +38,9 @@ class SystemController:
 
     def register_rent(self):
         self.__rent_controller.open_screen()
+    
+    def open_report(self):
+        self.__report_controller.open_screen()
 
     def system_exit(self):
         exit(0)
@@ -44,6 +49,7 @@ class SystemController:
         switcher = {'customerscreen': self.register_customer,
                         'equipmentscreen': self.register_equipment,
                         'rentscreen': self.register_rent,
+                        'reportscreen': self.open_report,
                         'exit': self.system_exit,
                         None: self.system_exit
                     }

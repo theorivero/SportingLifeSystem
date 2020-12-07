@@ -12,7 +12,7 @@ class SystemScreen:
             [sg.Txt('                                    '),sg.Button('Clientes', size=(20, 3), key='customerscreen',  font=("Helvetica", 10))],
             [sg.Txt('                                    '),sg.Button('Equipamentos', size=(20, 3), key='equipmentscreen',  font=("Helvetica", 10))],
             [sg.Txt('                                    '),sg.Button('Aluguéis', size=(20, 3), key='rentscreen',  font=("Helvetica", 10))],
-            [sg.Txt('                                    '),sg.Button('Relatórios', size=(20, 3),  font=("Helvetica", 10))],
+            [sg.Txt('                                    '),sg.Button('Relatórios', size=(20, 3), key='reportscreen',  font=("Helvetica", 10))],
             [sg.Txt('                                    '),sg.Button('Sair', size=(20, 3), key='exit', font=("Helvetica", 10))],
         ]
         self.__window = sg.Window('Menu', size=(500,300)).Layout(layout)
