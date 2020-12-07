@@ -10,10 +10,10 @@ class EquipmentScreen(AbstractScreen):
     def init_components(self, equipments):
         sg.theme('DarkGrey5')
         layout = [
-            [sg.Listbox(values=equipments, size=(30,5))],
+            [sg.Listbox(values=equipments, size=(60,5))],
             [sg.Btn('Criar Equipamento', key='createequipment'),sg.Btn('Modificar', key='modifyequipment'), sg.Btn('Excluir', key='deleteequipment')]
         ]
-        self.__window = sg.Window('Equipment Screen', layout=layout, size=(300,150), finalize=True)
+        self.__window = sg.Window('Equipment Screen', layout=layout, size=(500,150), finalize=True)
 
     def screen_options(self, equipments):
         self.init_components(equipments)

@@ -1,7 +1,7 @@
 from limit.system_screen import SystemScreen
 from controllers.customer_controller import CustomerController
 from controllers.equipment_controller import EquipmentController
-from controllers.rent_controller2 import RentController
+from controllers.rent_controller import RentController
 
 class SystemController:
     __instance = None

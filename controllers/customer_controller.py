@@ -41,17 +41,20 @@ class CustomerController:
     def register_customer(self, name, phone_number):
         new_customer = Customer(name, phone_number)
         self.customerdao.add(new_customer)
+        self.__customer_screen.show_message('Register', 'Successful registered')
 
     def modify_customer(self, name, phone_number, option):
         new_customer = Customer(name, phone_number)
         self.customerdao.remove(option[0][0].split()[-1])
         self.customerdao.add(new_customer)
+        self.__customer_screen.show_message('Modify', 'Successful modified')
 
     def del_customer(self, option):
         self.customerdao.remove(option[0][0].split()[-1])
+        self.__customer_screen.show_message('Del', 'Successful deleted')
 
     def open_screen(self):
-        chosen_option, dicti = self.__customer_screen.screen_options([f"Name: {customer.name} Phone: {customer.phone_number}" for customer in self.__customerdao.get_all()])
+        chosen_option, dicti = self.__customer_screen.screen_options([f"Name: {customer.name} | Phone: {customer.phone_number}" for customer in self.__customerdao.get_all()])
         switcher = {'createcustomer': self.open_create_screen,
                     'modifycustomer': self.open_modify_screen,
                     'deletecustomer': self.del_customer,
