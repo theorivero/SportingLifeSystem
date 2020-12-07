@@ -16,18 +16,20 @@ class ReportController:
     
     @property
     def rents(self):
-        self.__rentdao = RentDao()
         return self.__rentdao.get_all()
     
     @property
     def customers(self):
-        self.__customerdao = CustomerDao()
         return self.__customerdao.get_all()
     
     @property
     def equipments(self):
-        self.__equipmentdao = EquipmentDao()
         return self.__equipmentdao.get_all()
+
+    def update_datas(self):
+        self.__equipmentdao = EquipmentDao()
+        self.__customerdao = CustomerDao()
+        self.__rentdao = RentDao()
 
     def get_customer_report_data(self):
         customers = self.customers
@@ -51,7 +53,6 @@ class ReportController:
             total_rents = len(rents)
             total_money = 0
             total_rent_weeks = 0
-            print(rents)
             for rent in rents:
                 total_money += rent.price
                 total_rent_weeks += rent.weeks_quantity
@@ -61,6 +62,7 @@ class ReportController:
             self.__report_values['total_rent_weeks'] = total_rent_weeks
 
     def open_screen(self):
+        self.update_datas()
         self.get_equipment_report_data()
         self.get_customer_report_data()
         self.get_rent_report_data()
