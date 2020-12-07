@@ -19,6 +19,10 @@ class EquipmentController:
         return EquipmentController.__instance
 
     @property
+    def equipmentdao(self):
+        return self.__equipmentdao
+
+    @property
     def equipments(self):
         return self.__equipmentdao.get_all()
 
@@ -47,7 +51,7 @@ class EquipmentController:
         self.__equipmentdao.remove(option[0][0])
 
     def open_screen(self):
-        chosen_option, dicti = self.__equipment_screen.screen_options([equipment.name for equipment in self.__equipmentdao.get_all()])
+        chosen_option, dicti = self.__equipment_screen.screen_options([f"{equipment.name} Total_Quantity: {equipment.total_quantity} Price: {equipment.rental_price}" for equipment in self.__equipmentdao.get_all()])
         switcher = {'createequipment': self.open_create_screen,
                     'modifyequipment': self.open_modify_screen,
                     'deleteequipment': self.del_equipment,

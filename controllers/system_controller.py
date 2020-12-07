@@ -1,7 +1,7 @@
 from limit.system_screen import SystemScreen
 from controllers.customer_controller import CustomerController
 from controllers.equipment_controller import EquipmentController
-from controllers.rent_controller import RentController
+from controllers.rent_controller2 import RentController
 
 class SystemController:
     __instance = None
@@ -10,7 +10,7 @@ class SystemController:
         self.__system_screen = SystemScreen()
         self.__customer_controller = CustomerController()
         self.__equipment_controller = EquipmentController()
-        self.__rent_controller = RentController(self)
+        self.__rent_controller = RentController()
 
     def __new__(cls):
         if SystemController.__instance is None:

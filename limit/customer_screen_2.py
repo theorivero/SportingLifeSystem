@@ -20,6 +20,8 @@ class CustomerCreateScreen(AbstractScreen):
     def screen_options(self):
         self.init_components()
         button, values = self.__window.Read()
+        if button is None:
+            return None, None
         if self.check_int(values['phone']) and self.check_letters(values['name']):
             return button, values
         else:

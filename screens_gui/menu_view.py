@@ -29,5 +29,4 @@ class MenuView:
     def show_message(self, title, message):
         sg.Popup(title, message)
 
-view = MenuView()
-view._open()
+dicti = {}

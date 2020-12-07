@@ -10,10 +10,10 @@ class CustomerScreen(AbstractScreen):
     def init_components(self, customers):
         sg.theme('DarkGrey5')
         layout = [
-            [sg.Listbox(values=customers, size=(30,5))],
+            [sg.Listbox(values=customers, size=(60,5))],
             [sg.Btn('Criar Cliente', key='createcustomer'),sg.Btn('Modificar', key='modifycustomer'), sg.Btn('Excluir', key='deletecustomer')]
         ]
-        self.__window = sg.Window('Customer Screen', layout=layout, size=(300,150), finalize=True)
+        self.__window = sg.Window('Customer Screen', layout=layout, size=(500,150), finalize=True)
 
     def screen_options(self, customers):
         self.init_components(customers)

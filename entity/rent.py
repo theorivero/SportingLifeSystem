@@ -1,9 +1,11 @@
 from entity.customer import *
 from entity.equipment import *
+import uuid
 
 
 class Rent:
     def __init__(self, customer: Customer, equipment: Equipment, weeks_quantity):
+        self.__id = uuid.uuid1()
         self.__customer = customer
         self.__customer.rented_equipments.append(equipment)
         self.__equipment = equipment
@@ -12,6 +14,10 @@ class Rent:
     @property
     def customer(self):
         return self.__customer
+
+    @property
+    def id(self):
+        return self.__id
 
     @property
     def equipment(self):
